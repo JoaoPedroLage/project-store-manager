@@ -11,7 +11,9 @@ const app = express();
 app.use(express.json());
 
 app.use('/products', productsRouter);
+app.use('/products/:id', productsRouter);
 app.use('/sales', salesRouter);
+app.use('/sales/:id', salesRouter);
 
 app.use(errorMiddlewares);
 
