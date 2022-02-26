@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 
-const errorMiddlewares = require('./middlewares/error.middlewares');
+// const errorMiddlewares = require('./middlewares/error.middleware');
 const { productsRouter, salesRouter } = require('./routes/index.routes');
 
 const app = express();
@@ -15,7 +15,7 @@ app.use('/products/:id', productsRouter);
 app.use('/sales', salesRouter);
 app.use('/sales/:id', salesRouter);
 
-app.use(errorMiddlewares);
+// app.use(errorMiddlewares);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {

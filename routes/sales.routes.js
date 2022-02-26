@@ -16,7 +16,7 @@ router.get(
 
 // router.post(
 //   '/',
-//   productsControllers.,
+//   salesControllers.create,
 // );
 
 module.exports = router;
