@@ -14,9 +14,14 @@ router.get(
   salesControllers.getById,
 );
 
-// router.post(
-//   '/',
-//   salesControllers.create,
-// );
+router.post(
+  '/',
+  salesControllers.create,
+);
+
+router.put(
+  '/',
+  salesControllers.update,
+);
 
 module.exports = router;
