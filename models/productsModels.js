@@ -23,6 +23,7 @@ const getById = async (id) => {
   const [result] = await connection.execute(SQL, [id]);
   
   if (!result.length) return null;
+
   return result[0];
 };
 
@@ -33,7 +34,9 @@ const create = async (name, quantity) => {
 
   const productNames = checkNameSQL.map((product) => product.name);
   
-  if (productNames.includes(name)) return false;
+  if (productNames.includes(name)) return null;
+  // const product = await getById(id);
+  // if (product) return null;
   
   const SQL = 'INSERT StoreManager.products (name, quantity) VALUES (?, ?);';
 
@@ -46,27 +49,41 @@ const create = async (name, quantity) => {
   };
 };
 
-const update = async (params, body) => {
-  const { id } = params;
-  const { name, quantity } = body;
-  const NameSQL = 'SELECT name FROM StoreManager.products;';
+const update = async (name, quantity, id) => {
+  const idSQL = 'SELECT id FROM StoreManager.products;';
 
-  const [checkNameSQL] = await connection.execute(NameSQL);
+  const [checkIdSQL] = await connection.execute(idSQL);
 
-  const productNames = checkNameSQL.map((product) => product.name);
-
-  console.log(productNames);
+  const productIds = checkIdSQL.map((product) => product.id);
   
-  if (productNames.includes(name) === false) return false;
+  if (productIds.includes(Number(id)) === false) return null;
+  // const product = await getById(id);
+  // if (!product) return null;
   
   const SQL = (
     `UPDATE StoreManager.products
       SET name = ?, quantity = ?
     WHERE id = ?;`);
 
-  const result = await connection.execute(SQL, [name, quantity, id]);
+  const [result] = await connection.execute(SQL, [name, quantity, id]);
 
-  console.log(result);
+  return result;
+};
+
+const exclude = async (id) => {  
+  const idSQL = 'SELECT id FROM StoreManager.products;';
+
+  const [checkIdSQL] = await connection.execute(idSQL);
+
+  const productIds = checkIdSQL.map((product) => product.id);
+  
+  if (productIds.includes(Number(id)) === false) return null;
+  // const product = await getById(id);
+  // if (!product) return null;
+  
+  const SQL = 'DELETE FROM StoreManager.product WHERE id = ?';
+
+  const [result] = await connection.execute(SQL, [id]);
 
   return result;
 };
@@ -76,4 +93,5 @@ module.exports = {
   getById,
   create,
   update,
+  exclude,
 };
