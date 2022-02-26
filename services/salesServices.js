@@ -12,7 +12,28 @@ const getById = async (id) => {
   return sales;
 };
 
+const create = async (requireData) => {
+  const sale = await saleModel.createSale();
+  const saleId = sale.insertId;
+
+  requireData.forEach(
+    async ({ productId, quantity }) => saleModel.salesRecord(productId, quantity, saleId),
+);
+  
+  const data = {
+    id: saleId,
+    itemsSold: requireData,
+  };
+
+  return data;
+};
+
+const update = async () => {
+  
+};
+
 module.exports = {
   getAll,
   getById,
+  create,
 };
