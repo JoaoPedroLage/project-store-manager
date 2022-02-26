@@ -29,7 +29,7 @@ const create = async (req, res, _next) => {
   try {
     const product = await productService.create(req.body);
 
-    if (product === false) return res.status(409).json({ message: 'Product already exists' });
+    if (!product) return res.status(409).json({ message: 'Product already exists' });
     
     return res.status(201).json(product);
   } catch (error) {
@@ -40,9 +40,9 @@ const create = async (req, res, _next) => {
 
 const update = async (req, res, _next) => {
   try {
-    const product = await productService.update(req);
+    const product = await productService.update(req.body, req.params.id);
 
-    if (product === false) return res.status(404).json({ message: 'Product not found' });
+    if (!product) return res.status(404).json({ message: 'Product not found' });
     
     return res.status(200).json(product);
   } catch (error) {
