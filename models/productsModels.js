@@ -81,7 +81,7 @@ const exclude = async (id) => {
   // const product = await getById(id);
   // if (!product) return null;
   
-  const SQL = 'DELETE FROM StoreManager.product WHERE id = ?';
+  const SQL = 'DELETE FROM StoreManager.products WHERE id = ?';
 
   const [result] = await connection.execute(SQL, [id]);
 
