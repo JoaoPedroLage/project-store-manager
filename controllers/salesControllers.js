@@ -34,8 +34,20 @@ const create = async (req, res, _next) => {
   }
 };
 
+const update = async (req, res, _next) => {
+  try {
+    const product = await saleService.update(req.params.id, req.body);
+    
+    return res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: `Erro: ${error.message}` });
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };
