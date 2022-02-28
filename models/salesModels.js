@@ -49,14 +49,25 @@ const createSale = async () => {
   return result;
 };
 
-const salesRecord = async (productId, quantity, id) => {
+const salesRecord = async (productId, quantity, saleId) => {
   const SQL = (
     'INSERT StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?);'
     );
 
-  const [result] = await connection.execute(SQL, [id, productId, quantity]);
+  const [result] = await connection.execute(SQL, [saleId, productId, quantity]);
 
   return result;
+};
+
+const updateSale = async (saleId, productId, quantity) => {
+  const SQL = (
+    `UPDATE StoreManager.sales_products
+      SET sale_id= ?, product_id = ?, quantity = ?
+    WHERE sale_id = ?;`);
+
+    const [result] = await connection.execute(SQL, [saleId, productId, quantity, saleId]);
+
+    return result;
 };
 
 module.exports = {
@@ -64,4 +75,5 @@ module.exports = {
   getById,
   createSale,
   salesRecord,
+  updateSale,
 };
