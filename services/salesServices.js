@@ -7,9 +7,9 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  const sales = await saleModel.getById(id);
+  const sale = await saleModel.getById(id);
 
-  return sales;
+  return sale;
 };
 
 const create = async (requireData) => {
@@ -28,12 +28,22 @@ const create = async (requireData) => {
   return data;
 };
 
-const update = async () => {
+const update = async (saleId, requireData) => {
+  const { productId, quantity } = requireData[0];
   
+  await saleModel.updateSale(Number(saleId), productId, quantity);
+
+  const data = {
+    saleId,
+    itemUpdated: requireData,
+  };
+
+  return data;
 };
 
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };
