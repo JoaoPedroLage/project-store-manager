@@ -20,7 +20,7 @@ router.post(
 );
 
 router.put(
-  '/',
+  '/:id',
   salesControllers.update,
 );
 
